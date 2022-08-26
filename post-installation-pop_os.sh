@@ -112,6 +112,12 @@ cd -
 rm -rf $minikube_installer
 echo "minikube CLI installed"
 
+#Install Compass MongoDB
+echo "Installing Compass MongoDB"
+wget https://downloads.mongodb.com/compass/mongodb-compass_1.32.3_amd64.deb /tmp/mongodb-compass.deb
+sudo gdebi --non-interactive /tmp/mongodb-compass.deb
+echo "Compass MongoDB Installed"
+
 # Install Dbeaver
 flatpak install flathub io.dbeaver.DBeaverCommunity -y --noninteractive
 
