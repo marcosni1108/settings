@@ -131,8 +131,6 @@ flatpak install flathub com.jetbrains.IntelliJ-IDEA-Community -y --noninteractiv
 
 flatpak install flathub org.gnome.meld -y --noninteractive
 
-flatpak install flathub org.flameshot.Flameshot -y --noninteractive
-
 flatpak install flathub com.getpostman.Postman -y --noninteractive
 
 flatpak install flathub com.rafaelmardojai.Blanket -y --noninteractive
@@ -140,6 +138,9 @@ flatpak install flathub com.rafaelmardojai.Blanket -y --noninteractive
 flatpak install flathub com.transmissionbt.Transmission -y --noninteractive
 
 flatpak install flathub org.onlyoffice.desktopeditors -y --noninteractive
+
+#Installing flameshot
+sudo apt install flameshot -y
 
 # Install sdkman - https://sdkman.io
 curl -s "https://get.sdkman.io" | bash
