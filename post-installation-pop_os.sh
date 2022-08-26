@@ -172,6 +172,25 @@ sudo systemctl enable containerd.service
 
 echo "Docker Engine installed and configured"
 
+#Install Docker Containers
+#Sonarqube
+echo "Creating Sonarqube container"
+sudo docker run -d --name sonarqube -p 9001:9000 -v ~/work/docker/sonar/data:/opt/sonarqube/data -v ~/work/docker/sonar/logs:/opt/sonarqube/logs -v ~/work/docker/sonar/extensions:/opt/sonarqube/extensions sonarqube:8.9.9-community
+echo "Sonarquebe launched"
+
+#MongoDB
+echo "Creating MongoDB container"
+sudo docker run --name mongoDB -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=secret -v ~/work/docker/mongo/data:/data/db mongo
+echo "MongoDB launched"
+
+#ActiveMQ
+echo "Creating ActiveMQ container"
+sudo docker run --name activeMQ -p 61616:61616 -p 8161:8161 rmohr/activemq
+echo "ActiveMQ launched"
+
+#Stopping Docker Containers
+sudo docker stop sonarqube activeMQ mongoDB
+
 # Install sdkman - https://sdkman.io
 curl -s "https://get.sdkman.io" | bash
 bash -c 'source "$HOME/.sdkman/bin/sdkman-init.sh"'
