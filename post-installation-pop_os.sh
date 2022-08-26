@@ -142,6 +142,31 @@ flatpak install flathub org.onlyoffice.desktopeditors -y --noninteractive
 #Installing flameshot
 sudo apt install flameshot -y
 
+#Installing Docker Engine
+sudo apt install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release -y
+
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+
+#Manage Docker as a non-root user
+sudo usermod -aG docker $USER
+
+#Configure Docker to start on boot🔗
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+
+
 # Install sdkman - https://sdkman.io
 curl -s "https://get.sdkman.io" | bash
 bash -c 'source "$HOME/.sdkman/bin/sdkman-init.sh"'
