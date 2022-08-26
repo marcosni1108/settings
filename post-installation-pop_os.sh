@@ -112,9 +112,6 @@ cd -
 rm -rf $minikube_installer
 echo "minikube CLI installed"
 
-# Configure flatpak repositories
-sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
 # Install Dbeaver
 flatpak install flathub io.dbeaver.DBeaverCommunity -y --noninteractive
 
