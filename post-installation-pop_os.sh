@@ -140,9 +140,11 @@ flatpak install flathub com.transmissionbt.Transmission -y --noninteractive
 flatpak install flathub org.onlyoffice.desktopeditors -y --noninteractive
 
 #Installing flameshot
+echo "Installing Flameshot"
 sudo apt install flameshot -y
 
 #Installing Docker Engine
+echo "Installing Docker Engine"
 sudo apt install \
     ca-certificates \
     curl \
@@ -160,12 +162,15 @@ sudo apt update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 
 #Manage Docker as a non-root user
+echo "Manage Docker as a non-root user"
 sudo usermod -aG docker $USER
 
 #Configure Docker to start on boot🔗
+echo "Setting Docker to start on boot"
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 
+echo "Docker Engine installed and configured"
 
 # Install sdkman - https://sdkman.io
 curl -s "https://get.sdkman.io" | bash
