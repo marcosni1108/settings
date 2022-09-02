@@ -2,6 +2,10 @@
 
 set -eu
 
+RED='\e[1;91m'
+GREEN='\e[1;92m'
+NO_COLOR='\e[0m'
+
 echo "Running script..."
 
 #variables for collect messages to print after install
@@ -23,18 +27,18 @@ sudo apt install -y \
 
 # Installing Google Chrome
 
-echo "Installing Google Chrome"
+echo -e "${GREEN}Installing Google Chrome${NO_COLOR}"
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome.deb
 sudo gdebi --non-interactive /tmp/google-chrome.deb
 rm /tmp/google-chrome.deb
-echo "Ok"
+echo -e "${GREEN}Ok${NO_COLOR}"
 
 # Install AWS Cli
 
 if command -v aws &> /dev/null ; then
-	echo "AWS CLI already installed"
+	echo -e "${GREEN}AWS CLI already installed${NO_COLOR}"
 else
-	echo "Installing AWS CLI"
+	echo -e "${GREEN}Installing AWS CLI${NO_COLOR}"
 	aws_cli_installer=$(mktemp -d aws-cli-XXXX)
 	cd $aws_cli_installer
 	curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -42,12 +46,12 @@ else
 	sudo ./aws/install
 	cd -
 	rm -rf $aws_cli_installer
-	echo "AWS CLI installed"
+	echo -e "${GREEN}AWS CLI installed${NO_COLOR}"
 fi
 
 # Install AWS SAM Cli
 
-echo "Installing AWS SAM CLI"
+echo -e "${GREEN}Installing AWS SAM CLI${NO_COLOR}"
 aws_sam_cli_installer=$(mktemp -d aws-sam-cli-XXXX)
 cd $aws_sam_cli_installer
 curl -L "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip" -o "aws-sam-cli-linux-x86_64.zip"
@@ -55,10 +59,10 @@ unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
 sudo ./sam-installation/install
 cd -
 rm -rf $aws_sam_cli_installer
-echo "AWS SAM CLI installed"
+echo -e "${GREEN}AWS SAM CLI installed${NO_COLOR}"
 
 # Install kubectl CLI
-echo "Installing kubectl CLI"
+echo -e "${GREEN}Installing kubectl CLI${NO_COLOR}"
 kubectl_installer=$(mktemp -d kubectl-cli-XXXX)
 cd $kubectl_installer
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -67,7 +71,7 @@ echo "$(<kubectl.sha256) kubectl" | sha256sum --check
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 cd -
 rm -rf $kubectl_installer
-echo "kubectl CLI installed"
+echo -e "${GREEN}kubectl CLI installed${NO_COLOR}"
 
 # Install kustomize CLI
 echo "Installing kustomize CLI"
@@ -77,20 +81,20 @@ curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack
 sudo install -o root -g root -m 0755 kustomize /usr/local/bin/kustomize
 cd -
 rm -rf $kustomize_installer
-echo "kustomize CLI installed"
+echo -e "${GREEN}kustomize CLI installed${NO_COLOR}"
 
 # Install kapp CLI - https://carvel.dev/kapp/
-echo "Installing kapp CLI"
+echo -e "${GREEN}Installing kapp CLI${NO_COLOR}"
 kapp_installer=$(mktemp -d kapp-cli-XXXX)
 cd $kapp_installer
 curl -s -L "https://github.com/vmware-tanzu/carvel-kapp/releases/download/v0.40.0/kapp-linux-amd64" -o "kapp"
 sudo install -o root -g root -m 0755 kapp /usr/local/bin/kapp
 cd -
 rm -rf $kapp_installer
-echo "kapp CLI installed"
+echo -e "${GREEN}kapp CLI installed${NO_COLOR}"
 
 # Install Openshift CLI - https://github.com/openshift/origin/releases
-echo "Installing oc (Openshift CLI)"
+echo -e "${GREEN}Installing oc (Openshift CLI)${NO_COLOR}"
 oc_installer=$(mktemp -d oc-cli-XXXX)
 cd $oc_installer
 curl -s -L "https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz" -o "oc.tar.gz"
@@ -99,10 +103,10 @@ tar -xf "oc.tar.gz"
 sudo install -o root -g root -m 0755 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc /usr/local/bin/oc
 cd -
 rm -rf $oc_installer
-echo "oc (Openshift CLI) installed"
+echo -e "${GREEN}oc (Openshift CLI) installed${NO_COLOR}"
 
 # Install minikube CLI
-echo "Installing minikube CLI"
+echo -e "${GREEN}Installing minikube CLI${NO_COLOR}"
 minikube_installer=$(mktemp -d minikube-cli-XXXX)
 cd $minikube_installer
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -110,13 +114,13 @@ chmod +x minikube
 sudo install -o root -g root -m 0755 minikube /usr/local/bin/minikube
 cd -
 rm -rf $minikube_installer
-echo "minikube CLI installed"
+echo -e "${GREEN}minikube CLI installed${NO_COLOR}"
 
 #Install Compass MongoDB
-echo "Installing Compass MongoDB"
+echo -e "${GREEN}Installing Compass MongoDB${NO_COLOR}"
 wget https://downloads.mongodb.com/compass/mongodb-compass_1.32.3_amd64.deb /tmp/mongodb-compass.deb
 sudo gdebi --non-interactive /tmp/mongodb-compass.deb
-echo "Compass MongoDB Installed"
+echo -e "${GREEN}Compass MongoDB Installed${NO_COLOR}"
 
 # Install Dbeaver
 flatpak install flathub io.dbeaver.DBeaverCommunity -y --noninteractive
@@ -146,11 +150,11 @@ flatpak install flathub com.transmissionbt.Transmission -y --noninteractive
 flatpak install flathub org.onlyoffice.desktopeditors -y --noninteractive
 
 #Installing flameshot
-echo "Installing Flameshot"
+echo -e "${GREEN}Installing Flameshot${NO_COLOR}"
 sudo apt install flameshot -y
 
 #Installing Docker Engine
-echo "Installing Docker Engine"
+echo -e "${GREEN}Installing Docker Engine${NO_COLOR}"
 sudo apt install \
     ca-certificates \
     curl \
@@ -168,31 +172,31 @@ sudo apt update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 
 #Manage Docker as a non-root user
-echo "Manage Docker as a non-root user"
+echo -e "${GREEN}Manage Docker as a non-root user${NO_COLOR}"
 sudo usermod -aG docker $USER
 
 #Configure Docker to start on boot🔗
-echo "Setting Docker to start on boot"
+echo -e "${GREEN}Setting Docker to start on boot${NO_COLOR}"
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 
-echo "Docker Engine installed and configured"
+echo -e "${GREEN}Docker Engine installed and configured${NO_COLOR}"
 
 #Install Docker Containers
 #Sonarqube
-echo "Creating Sonarqube container"
+echo -e "${GREEN}Creating Sonarqube container${NO_COLOR}"
 sudo docker run -d --name sonarqube -p 9001:9000 -v ~/work/docker/sonar/data:/opt/sonarqube/data -v ~/work/docker/sonar/logs:/opt/sonarqube/logs -v ~/work/docker/sonar/extensions:/opt/sonarqube/extensions sonarqube:8.9.9-community
-echo "Sonarquebe launched"
+echo "Sonarquebe launched${NO_COLOR}"
 
 #MongoDB
-echo "Creating MongoDB container"
+echo -e "${GREEN}Creating MongoDB container"
 sudo docker run --name mongoDB -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=secret -v ~/work/docker/mongo/data:/data/db mongo
-echo "MongoDB launched"
+echo -e "${GREEN}MongoDB launched${NO_COLOR}"
 
 #ActiveMQ
 echo "Creating ActiveMQ container"
 sudo docker run --name activeMQ -p 61616:61616 -p 8161:8161 rmohr/activemq
-echo "ActiveMQ launched"
+echo -e "${GREEN}ActiveMQ launched${NO_COLOR}"
 
 #Stopping Docker Containers
 sudo docker stop sonarqube activeMQ mongoDB
@@ -225,12 +229,12 @@ nvm install v8.10.0
 # Install apic
 nvm use v8.10.0
 if command -v apic &> /dev/null ; then
-	echo "apic CLI already installed"
+	echo -e "${GREEN}apic CLI already installed${NO_COLOR}"
 else
-    echo "Installing apic CLI"
+    echo -e "${GREEN}Installing apic CLI${NO_COLOR}"
     npm install -g apiconnect@5.2.12
     apic -v --accept-license --disable-analytics
-    echo "Installed apic CLI"
+    echo -e "${GREEN}Installed apic CLI${NO_COLOR}"
 fi
 messages="${messages}\n\n\napic istalled on nvm. To use:\n"
 messages="${messages}\$ nvm use v8.10.0 \n"
@@ -238,10 +242,10 @@ messages="${messages}\$ apic version"
 
 # Install Angular CLI v9
 nvm use v12.22.6
-echo "Installing Angular CLI"
+echo -e "${GREEN}Installing Angular CLI${NO_COLOR}"
 export NG_CLI_ANALYTICS=ci # Fix - no analytic question
 npm install -g @angular/cli@9.1.14
-echo "Installed Angular CLI"
+echo -e "${GREEN}Installed Angular CLI${NO_COLOR}"
 
 # Configure NPM Auth Token
 shell_rc="${HOME}/.bashrc"
@@ -262,4 +266,4 @@ echo -e $messages
 echo -e "\n\n"
 echo "##############################################################"
 
-echo "Finished Script"
+echo -e "${GREEN}Finished Script${NO_COLOR}"
